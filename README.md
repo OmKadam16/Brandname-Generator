@@ -1,7 +1,7 @@
 # Brando
 
 ## Overview
-The Brnado is a web application that generates creative brand name suggestions based on user input. It features a modern, minimalist UI and a Flask backend for server-side processing. Users can enter their city name and pet's name, and the app will provide a list of potential brand names.
+The Brando is a web application that generates creative brand name suggestions based on user input. It features a modern, minimalist UI and a Flask backend for server-side processing. Users can enter their city name and pet's name, and the app will provide a list of potential brand names.
 
 ## Files in the Project
 - **brandname_Generator.py**: The Flask backend that serves the web app and handles brand name generation via API endpoints.
