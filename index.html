@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brandname Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Brandname Generator</h1>
+        <form id="brandnameForm">
+            <div class="input-group">
+                <label for="city">City Name</label>
+                <input type="text" id="city" name="city" required>
+            </div>
+            <div class="input-group">
+                <label for="pet">Pet Name</label>
+                <input type="text" id="pet" name="pet" required>
+            </div>
+            <button type="submit">Generate Brand Names</button>
+        </form>
+        <div class="suggestions" id="suggestions"></div>
+    </div>
+
+    <script>
+        document.getElementById('brandnameForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const city = document.getElementById('city').value.trim();
+            const pet = document.getElementById('pet').value.trim();
+            
+            if (!city || !pet) {
+                alert('Please enter both city and pet names.');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ city, pet })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    const suggestionsDiv = document.getElementById('suggestions');
+                    suggestionsDiv.innerHTML = "<h2>Brand Name Suggestions</h2><div class='pills'>" + 
+                        data.suggestions.map(name => "<div class='pill'>" + name + "</div>").join('') + 
+                        "</div>";
+                } else {
+                    alert(data.error || 'An error occurred.');
+                }
+            } catch (error) {
+                alert('Failed to generate suggestions. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>
